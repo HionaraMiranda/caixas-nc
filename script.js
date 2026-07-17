@@ -1125,45 +1125,15 @@ function salvarEdicaoCaixa(){
     "Caixa atualizada com sucesso."
     );
 
-    mostrarTela(
-    "visualizar"
-    );
-
     async function testeFirebase(){
 
     try{
 
-        await addDoc(
-            collection(db,"historico"),
-            {
-                acao:"TESTE FIREBASE",
-                data:new Date().toLocaleString()
-            }
-        );
-
-        console.log(
-        "Firebase conectado com sucesso"
-        );
-
-    }catch(erro){
-
-        console.error(
-        "Erro Firebase",
-        erro
-        );
-
-    }
-
-}
-
-testeFirebase();
-}
-async function testeFirebase(){
-
-    try{
-
-        await addDoc(
-            collection(db,"historico"),
+        await window.addDoc(
+            window.collection(
+                window.db,
+                "historico"
+            ),
             {
                 acao:"TESTE FIREBASE",
                 data:new Date().toLocaleString()
