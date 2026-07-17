@@ -1125,6 +1125,7 @@ function salvarEdicaoCaixa(){
     "Caixa atualizada com sucesso."
     );
 
+}
     async function testeFirebase(){
 
     try{
@@ -1155,4 +1156,4 @@ function salvarEdicaoCaixa(){
 
 }
 
-testeFirebase();}
+testeFirebase();
