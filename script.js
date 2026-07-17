@@ -1158,3 +1158,31 @@ function salvarEdicaoCaixa(){
 
 testeFirebase();
 }
+async function testeFirebase(){
+
+    try{
+
+        await addDoc(
+            collection(db,"historico"),
+            {
+                acao:"TESTE FIREBASE",
+                data:new Date().toLocaleString()
+            }
+        );
+
+        console.log(
+        "DADO GRAVADO NO FIREBASE"
+        );
+
+    }catch(erro){
+
+        console.error(
+        "ERRO FIREBASE",
+        erro
+        );
+
+    }
+
+}
+
+testeFirebase();
