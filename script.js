@@ -729,52 +729,30 @@ document
 .getElementById("localizacaoLatonado")
 .addEventListener("change", function(){
 
-if(this.value === "NA MAQUINA"){
-
-document.getElementById(
-"linhaLatonado"
-).style.display="block";
-
-document.getElementById(
-"maquinaLatonado"
-).style.display="block";
-
-}else{
-
-document.getElementById(
-"linhaLatonado"
-).style.display="none";
-
-document.getElementById(
-"maquinaLatonado"
-).style.display="none";
-document
-.getElementById("localizacaoLatonado")
-.addEventListener("change", function(){
-
     if(this.value === "NA MAQUINA"){
 
         document.getElementById(
         "linhaLatonado"
-        ).style.display="block";
+        ).style.display = "block";
 
         document.getElementById(
         "maquinaLatonado"
-        ).style.display="block";
+        ).style.display = "block";
 
     }else{
 
         document.getElementById(
         "linhaLatonado"
-        ).style.display="none";
+        ).style.display = "none";
 
         document.getElementById(
         "maquinaLatonado"
-        ).style.display="none";
+        ).style.display = "none";
 
     }
 
 });
+
 document
 .getElementById("descricaoLatonado")
 .addEventListener("change", function(){
@@ -792,9 +770,6 @@ document
         ).style.display = "none";
 
     }
-
-});
-}
 
 });
 
@@ -1126,7 +1101,8 @@ function salvarEdicaoCaixa(){
     );
 
 }
-    async function testeFirebase(){
+
+async function testeFirebase(){
 
     try{
 
