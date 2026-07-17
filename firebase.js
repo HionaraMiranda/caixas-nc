@@ -23,3 +23,4 @@ window.db = db;
 window.collection = collection;
 window.addDoc = addDoc;
 window.getDocs = getDocs;
+console.log("FIREBASE CARREGOU");
