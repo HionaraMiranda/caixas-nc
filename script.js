@@ -1131,5 +1131,4 @@ async function testeFirebase(){
     }
 
 }
-
 testeFirebase();
