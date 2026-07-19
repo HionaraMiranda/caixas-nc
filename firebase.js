@@ -24,3 +24,33 @@ window.collection = collection;
 window.addDoc = addDoc;
 window.getDocs = getDocs;
 console.log("FIREBASE CARREGOU");
+window.db = db;
+window.collection = collection;
+window.addDoc = addDoc;
+window.getDocs = getDocs;
+
+console.log("FIREBASE CARREGOU");
+
+async function testeFirebase(){
+
+    try{
+
+        await addDoc(
+            collection(db, "historico"),
+            {
+                acao: "TESTE FIREBASE",
+                data: new Date().toLocaleString()
+            }
+        );
+
+        console.log("DADO GRAVADO NO FIREBASE");
+
+    }catch(erro){
+
+        console.error("ERRO FIREBASE", erro);
+
+    }
+
+}
+
+testeFirebase();
