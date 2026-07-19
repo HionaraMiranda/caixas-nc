@@ -1,4 +1,4 @@
-// =========================
+odutos = [];// =========================
 // BANCO LOCAL
 // =========================
 
@@ -1140,36 +1140,6 @@ async function carregarCaixasFirebase(){
         produtos = [];
 
         snapshot.forEach(doc => {
-            produtos.push(doc.data());
-        });
-
-        carregarTabela();
-        carregarTabelaEditar();
-        atualizarDashboard();
-
-        console.log("CAIXAS CARREGADAS DO FIREBASE");
-
-    }catch(erro){
-
-        console.error(erro);
-
-    }
-
-}{
-
-    try{
-
-       const snapshot =
-await getDocs(
-    collection(
-        db,
-        "caixas"
-    )
-);
-
-        produtos = [];
-
-        snapshot.forEach(doc => {
 
             produtos.push(
                 doc.data()
@@ -1196,6 +1166,7 @@ await getDocs(
     }
 
 }
+
 async function carregarLatonadosFirebase(){
 
     try{
@@ -1208,34 +1179,6 @@ async function carregarLatonadosFirebase(){
             )
         );
 
-        latonados = [];
-
-        snapshot.forEach(doc => {
-            latonados.push(doc.data());
-        });
-
-        listarLatonados();
-        dashboardLatonados();
-
-        console.log("LATONADOS CARREGADOS DO FIREBASE");
-
-    }catch(erro){
-
-        console.error(erro);
-
-    }
-
-}{
-
-    try{
-
-        const snapshot =
-        await getDocs(
-    collection(
-        db,
-        "latonados"
-    )
-);
         latonados = [];
 
         snapshot.forEach(doc => {
@@ -1256,10 +1199,10 @@ async function carregarLatonadosFirebase(){
 
     }catch(erro){
 
-        console.error(erro);
+        console.error(
+        erro
+        );
 
     }
 
 }
-
-
