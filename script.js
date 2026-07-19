@@ -1129,13 +1129,13 @@ async function carregarCaixasFirebase(){
 
     try{
 
-        const snapshot =
-        await getDocs(
-            collection(
-                db,
-                "caixas"
-            )
-        );
+       const snapshot =
+await window.getDocs(
+    window.collection(
+        window.db,
+        "caixas"
+    )
+);
 
         produtos = [];
 
@@ -1166,7 +1166,13 @@ async function carregarCaixasFirebase(){
     }
 
 }
-async function carregarLatonadosFirebase(){
+const snapshot =
+await getDocs(
+    collection(
+        db,
+        "latonados"
+    )
+);{
 
     try{
 
