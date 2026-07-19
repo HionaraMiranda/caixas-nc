@@ -670,11 +670,7 @@ criarGrafico();
 // =========================
 
 
-atualizarDashboard();
-
-carregarTabela();
-
-carregarTabelaEditar();
+carregarCaixasFirebase();;
 
 listarUsuarios();
 
@@ -1121,5 +1117,46 @@ function salvarEdicaoCaixa(){
     alert(
     "Caixa atualizada com sucesso."
     );
+
+}
+async function carregarCaixasFirebase(){
+
+    try{
+
+        const snapshot =
+        await getDocs(
+            collection(
+                db,
+                "caixas"
+            )
+        );
+
+        produtos = [];
+
+        snapshot.forEach(doc => {
+
+            produtos.push(
+                doc.data()
+            );
+
+        });
+
+        carregarTabela();
+
+        carregarTabelaEditar();
+
+        atualizarDashboard();
+
+        console.log(
+        "CAIXAS CARREGADAS DO FIREBASE"
+        );
+
+    }catch(erro){
+
+        console.error(
+        erro
+        );
+
+    }
 
 }
