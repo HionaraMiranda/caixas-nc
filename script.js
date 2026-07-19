@@ -674,9 +674,7 @@ carregarCaixasFirebase();;
 
 listarUsuarios();
 
-listarLatonados();
-
-dashboardLatonados();
+carregarLatonadosFirebase();
 
 function criarGrafico() {
 
@@ -791,7 +789,7 @@ document
 
 });
 
-function salvarLatonado(){
+async function salvarLatonado(){
 
 let etiqueta =
 document.getElementById(
@@ -876,6 +874,14 @@ dataAlteracao:""
 };
 
 latonados.push(registro);
+
+await window.addDoc(
+    collection(
+        db,
+        "latonados"
+    ),
+    registro
+);
 
 localStorage.setItem(
 "latonados",
@@ -1149,6 +1155,45 @@ async function carregarCaixasFirebase(){
 
         console.log(
         "CAIXAS CARREGADAS DO FIREBASE"
+        );
+
+    }catch(erro){
+
+        console.error(
+        erro
+        );
+
+    }
+
+}
+async function carregarLatonadosFirebase(){
+
+    try{
+
+        const snapshot =
+        await getDocs(
+            collection(
+                db,
+                "latonados"
+            )
+        );
+
+        latonados = [];
+
+        snapshot.forEach(doc => {
+
+            latonados.push(
+                doc.data()
+            );
+
+        });
+
+        listarLatonados();
+
+        dashboardLatonados();
+
+        console.log(
+        "LATONADOS CARREGADOS DO FIREBASE"
         );
 
     }catch(erro){
