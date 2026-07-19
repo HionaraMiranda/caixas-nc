@@ -239,12 +239,26 @@ async function salvarProduto() {
 
    produtos.push(produto);
 
+   console.log(produto);
+
 await window.addDoc(
-    collection(
-        db,
+    window.collection(
+        window.db,
         "caixas"
     ),
-    produto
+    {
+        caixa: produto.caixa,
+        descricao: produto.descricao,
+        bobina: produto.bobina,
+        categoria: produto.categoria,
+        peso: produto.peso,
+        usuario: produto.usuario,
+        localizacao: produto.localizacao,
+        observacao: produto.observacao,
+        dataCadastro: produto.dataCadastro,
+        alteradoPor: produto.alteradoPor,
+        dataAlteracao: produto.dataAlteracao
+    }
 );
 
 salvarBanco();
