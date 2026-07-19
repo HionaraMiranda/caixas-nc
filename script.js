@@ -1204,30 +1204,4 @@ async function carregarLatonadosFirebase(){
 
 }
 
-        latonados = [];
 
-        snapshot.forEach(doc => {
-
-            latonados.push(
-                doc.data()
-            );
-
-        });
-
-        listarLatonados();
-
-        dashboardLatonados();
-
-        console.log(
-        "LATONADOS CARREGADOS DO FIREBASE"
-        );
-
-    }catch(erro){
-
-        console.error(
-        erro
-        );
-
-    }
-
-}
