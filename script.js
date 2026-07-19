@@ -1166,7 +1166,6 @@ async function carregarCaixasFirebase(){
     }
 
 }
-
 async function carregarLatonadosFirebase(){
 
     try{
