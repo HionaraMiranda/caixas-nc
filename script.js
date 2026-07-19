@@ -183,7 +183,7 @@ function excluirUsuario(index) {
 // SALVAR PRODUTO
 // =========================
 
-function salvarProduto() {
+async function salvarProduto() {
 
     let caixa = document.getElementById("caixa").value;
 
@@ -237,13 +237,21 @@ function salvarProduto() {
 
     };
 
-    produtos.push(produto);
+   produtos.push(produto);
 
-    salvarBanco();
+await window.addDoc(
+    collection(
+        db,
+        "caixas"
+    ),
+    produto
+);
 
-    limparFormulario();
+salvarBanco();
 
-    alert("Produto cadastrado com sucesso.");
+limparFormulario();
+
+alert("Produto cadastrado com sucesso.");
 }
 
 // =========================
