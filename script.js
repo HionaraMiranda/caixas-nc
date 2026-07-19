@@ -1129,10 +1129,40 @@ async function carregarCaixasFirebase(){
 
     try{
 
+        const snapshot =
+        await window.firebaseDB.getDocs(
+            window.firebaseDB.collection(
+                window.firebaseDB.db,
+                "caixas"
+            )
+        );
+
+        produtos = [];
+
+        snapshot.forEach(doc => {
+            produtos.push(doc.data());
+        });
+
+        carregarTabela();
+        carregarTabelaEditar();
+        atualizarDashboard();
+
+        console.log("CAIXAS CARREGADAS DO FIREBASE");
+
+    }catch(erro){
+
+        console.error(erro);
+
+    }
+
+}{
+
+    try{
+
        const snapshot =
-await window.getDocs(
-    window.collection(
-        window.db,
+await getDocs(
+    collection(
+        db,
         "caixas"
     )
 );
@@ -1171,13 +1201,41 @@ async function carregarLatonadosFirebase(){
     try{
 
         const snapshot =
-        await window.getDocs(
-            window.collection(
-                window.db,
+        await window.firebaseDB.getDocs(
+            window.firebaseDB.collection(
+                window.firebaseDB.db,
                 "latonados"
             )
         );
 
+        latonados = [];
+
+        snapshot.forEach(doc => {
+            latonados.push(doc.data());
+        });
+
+        listarLatonados();
+        dashboardLatonados();
+
+        console.log("LATONADOS CARREGADOS DO FIREBASE");
+
+    }catch(erro){
+
+        console.error(erro);
+
+    }
+
+}{
+
+    try{
+
+        const snapshot =
+        await getDocs(
+    collection(
+        db,
+        "latonados"
+    )
+);
         latonados = [];
 
         snapshot.forEach(doc => {
