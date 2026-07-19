@@ -876,8 +876,8 @@ dataAlteracao:""
 latonados.push(registro);
 
 await window.addDoc(
-    collection(
-        db,
+    window.collection(
+        window.db,
         "latonados"
     ),
     registro
@@ -1166,23 +1166,43 @@ await window.getDocs(
     }
 
 }
-const snapshot =
-await getDocs(
-    collection(
-        db,
-        "latonados"
-    )
-);{
+async function carregarLatonadosFirebase(){
 
     try{
 
         const snapshot =
-        await getDocs(
-            collection(
-                db,
+        await window.getDocs(
+            window.collection(
+                window.db,
                 "latonados"
             )
         );
+
+        latonados = [];
+
+        snapshot.forEach(doc => {
+
+            latonados.push(
+                doc.data()
+            );
+
+        });
+
+        listarLatonados();
+
+        dashboardLatonados();
+
+        console.log(
+        "LATONADOS CARREGADOS DO FIREBASE"
+        );
+
+    }catch(erro){
+
+        console.error(erro);
+
+    }
+
+}
 
         latonados = [];
 
