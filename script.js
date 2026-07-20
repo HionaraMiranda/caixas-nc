@@ -669,13 +669,23 @@ criarGrafico();
 // INICIALIZAÇÃO
 // =========================
 
-window.addEventListener("load", async () => {
+window.addEventListener("load", async function(){
 
     listarUsuarios();
 
-    await carregarCaixasFirebase();
+    if(window.firebaseDB){
 
-    await carregarLatonadosFirebase();
+        await carregarCaixasFirebase();
+
+        await carregarLatonadosFirebase();
+
+    }else{
+
+        console.error(
+            "firebaseDB não carregou"
+        );
+
+    }
 
 });
 
@@ -1130,6 +1140,11 @@ function salvarEdicaoCaixa(){
 }
 async function carregarCaixasFirebase(){
 
+    if(!window.firebaseDB){
+        console.error("firebaseDB indefinido");
+        return;
+    }
+
     try{
 
         const snapshot =
@@ -1164,6 +1179,11 @@ async function carregarCaixasFirebase(){
 
 }
 async function carregarLatonadosFirebase(){
+
+    if(!window.firebaseDB){
+        console.error("firebaseDB indefinido");
+        return;
+    }
 
     try{
 
