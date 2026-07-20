@@ -605,7 +605,7 @@ function exportarExcel() {
 // =========================
 // IMPORTAR EXCEL
 // =========================
-function importarExcel(event) {
+ async function importarExcel(event) {
 
     const arquivo = event.target.files[0];
 
@@ -625,37 +625,45 @@ function importarExcel(event) {
 
         const dadosExcel = XLSX.utils.sheet_to_json(sheet);
 
-        dadosExcel.forEach(linha => {
+      for (const linha of dadosExcel) {
 
-            produtos.push({
+    let produto = {
 
-                caixa: linha["Número da caixa"] || "",
+        caixa: linha["Número da caixa"] || "",
 
-                descricao: linha["Descrição"] || "",
+        descricao: linha["Descrição"] || "",
 
-                bobina: linha["TIPO DE BOBINA"] || "",
+        bobina: linha["TIPO DE BOBINA"] || "",
 
-                categoria: linha["CAIXA DE"] || "",
+        categoria: linha["CAIXA DE"] || "",
 
-                peso: linha["Peso (kg)"] || 0,
+        peso: linha["Peso (kg)"] || 0,
 
-                usuario: linha["Usuário"] || "",
+        usuario: linha["Usuário"] || "IMPORTACAO",
 
-                localizacao: linha["Localização"] || "",
+        localizacao: linha["Localização"] || "",
 
-                observacao: "",
+        observacao: "",
 
-                dataCadastro: new Date().toLocaleString(),
+        dataCadastro: new Date().toLocaleString(),
 
-                alteradoPor: "",
+        alteradoPor: "",
 
-                dataAlteracao: ""
+        dataAlteracao: ""
 
-            });
+    };
 
-        });
+    await window.addDoc(
+        window.collection(
+            window.db,
+            "caixas"
+        ),
+        produto
+    );
 
-        salvarBanco();
+}
+
+await carregarCaixasFirebase();
 
         alert(
             dadosExcel.length +
