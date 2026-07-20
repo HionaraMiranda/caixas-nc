@@ -23,13 +23,16 @@ window.db = db;
 window.collection = collection;
 window.addDoc = addDoc;
 window.getDocs = getDocs;
-console.log("FIREBASE CARREGOU");
-window.db = db;
-window.collection = collection;
-window.addDoc = addDoc;
-window.getDocs = getDocs;
+
+window.firebaseDB = {
+    db,
+    collection,
+    addDoc,
+    getDocs
+};
 
 console.log("FIREBASE CARREGOU");
+;
 
 async function testeFirebase(){
 
