@@ -542,7 +542,7 @@ function editarProduto(index){
 // EXCLUIR
 // =========================
 
-function excluirProduto(index) {
+async function excluirProduto(index) {
 
     if (!confirm("Deseja excluir o produto?"))
         return;
@@ -1063,7 +1063,7 @@ function exportarLatonados(){
 
 }
 
-function editarLatonado(index){
+async function editarLatonado(index){
 
     let novaSituacao = prompt(
         "Nova Situação:",
@@ -1114,7 +1114,7 @@ await carregarLatonadosFirebase();
     dashboardLatonados();
 }
 
-function excluirLatonado(index){
+async function excluirLatonado(index){
 
     if(!confirm("Deseja excluir esta bobina?")){
         return;
@@ -1139,7 +1139,7 @@ await carregarLatonadosFirebase();
 
     dashboardLatonados();
 }
-function salvarEdicaoCaixa(){
+async function salvarEdicaoCaixa(){
 
     let i =
     document.getElementById(
