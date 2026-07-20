@@ -649,7 +649,8 @@ async function importarExcel(event) {
 
                 observacao: "",
 
-                dataCadastro: new Date().toLocaleString(),
+                dataCadastro:
+                new Date().toLocaleString(),
 
                 alteradoPor: "",
 
