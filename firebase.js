@@ -4,8 +4,12 @@ import {
   getFirestore,
   collection,
   addDoc,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+  getDocs,
+  updateDoc,
+  deleteDoc,
+  doc
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyApTUTflwNDyTr6sTZeyrAf5f0Fj6k7y34",
@@ -23,7 +27,14 @@ window.db = db;
 window.collection = collection;
 window.addDoc = addDoc;
 window.getDocs = getDocs;
+window.updateDoc = updateDoc;
+window.deleteDoc = deleteDoc;
+window.doc = doc;
 
+globalThis.db = db;
+globalThis.collection = collection;
+globalThis.addDoc = addDoc;
+globalThis.getDocs = getDocs;
 window.firebaseDB = {
     db,
     collection,
