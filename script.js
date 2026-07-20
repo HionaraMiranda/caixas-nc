@@ -97,7 +97,7 @@ function login() {
 
     atualizarDashboard();
     carregarTabela();
-    listarUsuarios();
+    await carregarUsuariosFirebase();
 
     alert("Login realizado com sucesso.");
 }
@@ -117,7 +117,7 @@ function logout() {
 // USUÁRIOS
 // =========================
 
-function criarUsuario() {
+async function criarUsuario() {
 
     let usuario = document.getElementById("novoUsuario").value;
     let senha = document.getElementById("novaSenha").value;
@@ -127,17 +127,30 @@ function criarUsuario() {
         return;
     }
 
-    usuarios.push({
+    await window.addDoc(
+    window.collection(
+        window.db,
+        "usuarios"
+    ),
+    {
         usuario,
-        senha
-    });
+        senha,
+        perfil:"usuario"
+    }
+);
+
+await carregarUsuariosFirebase();
+
+alert(
+"Usuário criado com sucesso."
+);
 
     localStorage.setItem(
         "usuarios",
         JSON.stringify(usuarios)
     );
 
-    listarUsuarios();
+    await carregarUsuariosFirebase();
 
     alert("Usuário criado com sucesso.");
 }
@@ -165,18 +178,26 @@ function listarUsuarios() {
     });
 }
 
-function excluirUsuario(index) {
+async function excluirUsuario(index) {
 
     if (!confirm("Excluir usuário?")) return;
 
-    usuarios.splice(index, 1);
+    await window.deleteDoc(
+    window.doc(
+        window.db,
+        "usuarios",
+        usuarios[index].id
+    )
+);
+
+await carregarUsuariosFirebase();
 
     localStorage.setItem(
         "usuarios",
         JSON.stringify(usuarios)
     );
 
-    listarUsuarios();
+    await carregarUsuariosFirebase();
 }
 
 // =========================
@@ -532,7 +553,15 @@ function excluirProduto(index) {
     if (!confirm("Deseja excluir o produto?"))
         return;
 
-    produtos.splice(index, 1);
+    await window.deleteDoc(
+    window.doc(
+        window.db,
+        "caixas",
+        produtos[index].id
+    )
+);
+
+await carregarCaixasFirebase();
 
     salvarBanco();
 }
@@ -671,7 +700,7 @@ criarGrafico();
 
 window.addEventListener("load", async function(){
 
-    listarUsuarios();
+    await carregarUsuariosFirebase();
 
     if(window.firebaseDB){
 
@@ -1051,7 +1080,29 @@ function editarLatonado(index){
         return;
     }
 
-    latonados[index].situacao = novaSituacao;
+    await window.updateDoc(
+    window.doc(
+        window.db,
+        "latonados",
+        latonados[index].id
+    ),
+    {
+
+        situacao:
+        novaSituacao,
+
+        alteradoPor:
+        localStorage.getItem(
+        "usuarioLogado"
+        ),
+
+        dataAlteracao:
+        new Date().toLocaleString()
+
+    }
+);
+
+await carregarLatonadosFirebase();
 
     latonados[index].alteradoPor =
     localStorage.getItem("usuarioLogado");
@@ -1075,7 +1126,15 @@ function excluirLatonado(index){
         return;
     }
 
-    latonados.splice(index,1);
+    await window.deleteDoc(
+    window.doc(
+        window.db,
+        "latonados",
+        latonados[index].id
+    )
+);
+
+await carregarLatonadosFirebase();
 
     localStorage.setItem(
         "latonados",
@@ -1093,45 +1152,56 @@ function salvarEdicaoCaixa(){
     "idxEditar"
     ).value;
 
-    produtos[i].descricao =
-    document.getElementById(
-    "editarDescricao"
-    ).value;
+    await window.updateDoc(
+    window.doc(
+        window.db,
+        "caixas",
+        produtos[i].id
+    ),
+    {
 
-    produtos[i].bobina =
-    document.getElementById(
-    "editarBobina"
-    ).value;
+        descricao:
+        document.getElementById(
+        "editarDescricao"
+        ).value,
 
-    produtos[i].categoria =
-    document.getElementById(
-    "editarCategoria"
-    ).value;
+        bobina:
+        document.getElementById(
+        "editarBobina"
+        ).value,
 
-    produtos[i].peso =
-    document.getElementById(
-    "editarPeso"
-    ).value;
+        categoria:
+        document.getElementById(
+        "editarCategoria"
+        ).value,
 
-    produtos[i].localizacao =
-    document.getElementById(
-    "editarLocalizacao"
-    ).value;
+        peso:
+        document.getElementById(
+        "editarPeso"
+        ).value,
 
-    produtos[i].observacao =
-    document.getElementById(
-    "editarObservacao"
-    ).value;
+        localizacao:
+        document.getElementById(
+        "editarLocalizacao"
+        ).value,
 
-    produtos[i].alteradoPor =
-    localStorage.getItem(
-    "usuarioLogado"
-    );
+        observacao:
+        document.getElementById(
+        "editarObservacao"
+        ).value,
 
-    produtos[i].dataAlteracao =
-    new Date().toLocaleString();
+        alteradoPor:
+        localStorage.getItem(
+        "usuarioLogado"
+        ),
 
-    salvarBanco();
+        dataAlteracao:
+        new Date().toLocaleString()
+
+    }
+);
+
+await carregarCaixasFirebase();
 
     alert(
     "Caixa atualizada com sucesso."
@@ -1159,7 +1229,10 @@ async function carregarCaixasFirebase(){
 
         snapshot.forEach(doc => {
 
-            produtos.push(doc.data());
+            produtos.push({
+    id: doc.id,
+    ...doc.data()
+});
 
         });
 
@@ -1199,7 +1272,10 @@ async function carregarLatonadosFirebase(){
 
         snapshot.forEach(doc => {
 
-            latonados.push(doc.data());
+           latonados.push({
+    id: doc.id,
+    ...doc.data()
+});
 
         });
 
@@ -1208,6 +1284,42 @@ async function carregarLatonadosFirebase(){
 
         console.log(
         "LATONADOS CARREGADOS DO FIREBASE"
+        );
+
+    }catch(erro){
+
+        console.error(erro);
+
+    }
+
+}
+async function carregarUsuariosFirebase(){
+
+    try{
+
+        const snapshot =
+        await window.getDocs(
+            window.collection(
+                window.db,
+                "usuarios"
+            )
+        );
+
+        usuarios = [];
+
+        snapshot.forEach(doc => {
+
+            usuarios.push({
+                id: doc.id,
+                ...doc.data()
+            });
+
+        });
+
+        await carregarUsuariosFirebase();
+
+        console.log(
+        "USUÁRIOS CARREGADOS"
         );
 
     }catch(erro){
