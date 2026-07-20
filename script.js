@@ -138,7 +138,11 @@ await carregarUsuariosFirebase();
 alert(
 "Usuário criado com sucesso."
 );
-
+await registrarHistorico(
+    "CRIOU USUARIO",
+    "",
+    usuario
+);
     localStorage.setItem(
         "usuarios",
         JSON.stringify(usuarios)
@@ -175,7 +179,11 @@ function listarUsuarios() {
 async function excluirUsuario(index) {
 
     if (!confirm("Excluir usuário?")) return;
-
+await registrarHistorico(
+    "EXCLUIU USUARIO",
+    "",
+    usuarios[index].usuario
+);
     await window.deleteDoc(
     window.doc(
         window.db,
@@ -279,6 +287,12 @@ await window.addDoc(
 salvarBanco();
 
 limparFormulario();
+
+await registrarHistorico(
+    "CADASTROU CAIXA",
+    produto.caixa,
+    ""
+);
 
 alert("Produto cadastrado com sucesso.");
 }
@@ -546,7 +560,11 @@ async function excluirProduto(index) {
 
     if (!confirm("Deseja excluir o produto?"))
         return;
-
+await registrarHistorico(
+    "EXCLUIU CAIXA",
+    produtos[index].caixa,
+    ""
+);
     await window.deleteDoc(
     window.doc(
         window.db,
@@ -927,7 +945,11 @@ JSON.stringify(latonados)
 listarLatonados();
 
 dashboardLatonados();
-
+await registrarHistorico(
+    "CADASTROU LATONADO",
+    "",
+    registro.etiqueta
+);
 alert(
 "Bobina cadastrada com sucesso."
 );
@@ -1108,7 +1130,11 @@ await carregarLatonadosFirebase();
         "latonados",
         JSON.stringify(latonados)
     );
-
+await registrarHistorico(
+    "EDITOU LATONADO",
+    "",
+    latonados[index].etiqueta
+);
     listarLatonados();
 
     dashboardLatonados();
@@ -1119,7 +1145,11 @@ async function excluirLatonado(index){
     if(!confirm("Deseja excluir esta bobina?")){
         return;
     }
-
+await registrarHistorico(
+    "EXCLUIU LATONADO",
+    "",
+    latonados[index].etiqueta
+);
     await window.deleteDoc(
     window.doc(
         window.db,
@@ -1200,6 +1230,11 @@ await carregarCaixasFirebase();
     alert(
     "Caixa atualizada com sucesso."
     );
+    await registrarHistorico(
+    "EDITOU CAIXA",
+    produtos[i].caixa,
+    ""
+);
 
 }
 async function carregarCaixasFirebase(){
@@ -1355,6 +1390,51 @@ async function carregarUsuariosFirebase(){
     }catch(erro){
 
         console.error(
+        erro
+        );
+
+    }
+
+}
+async function registrarHistorico(
+    acao,
+    caixa = "",
+    latonado = ""
+){
+
+    try{
+
+        await window.addDoc(
+            window.collection(
+                window.db,
+                "historico"
+            ),
+            {
+
+                usuario:
+                localStorage.getItem(
+                "usuarioLogado"
+                ),
+
+                data:
+                new Date().toLocaleString(),
+
+                acao:
+                acao,
+
+                caixa:
+                caixa,
+
+                latonado:
+                latonado
+
+            }
+        );
+
+    }catch(erro){
+
+        console.error(
+        "ERRO HISTORICO",
         erro
         );
 
