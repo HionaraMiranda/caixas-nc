@@ -669,12 +669,15 @@ criarGrafico();
 // INICIALIZAÇÃO
 // =========================
 
+window.addEventListener("load", async () => {
 
-carregarCaixasFirebase();;
+    listarUsuarios();
 
-listarUsuarios();
+    await carregarCaixasFirebase();
 
-carregarLatonadosFirebase();
+    await carregarLatonadosFirebase();
+
+});
 
 function criarGrafico() {
 
@@ -1130,9 +1133,9 @@ async function carregarCaixasFirebase(){
     try{
 
         const snapshot =
-        await window.firebaseDB.getDocs(
-            window.firebaseDB.collection(
-                window.firebaseDB.db,
+        await getDocs(
+            collection(
+                db,
                 "caixas"
             )
         );
@@ -1141,16 +1144,12 @@ async function carregarCaixasFirebase(){
 
         snapshot.forEach(doc => {
 
-            produtos.push(
-                doc.data()
-            );
+            produtos.push(doc.data());
 
         });
 
         carregarTabela();
-
         carregarTabelaEditar();
-
         atualizarDashboard();
 
         console.log(
@@ -1159,9 +1158,7 @@ async function carregarCaixasFirebase(){
 
     }catch(erro){
 
-        console.error(
-        erro
-        );
+        console.error(erro);
 
     }
 
@@ -1171,9 +1168,9 @@ async function carregarLatonadosFirebase(){
     try{
 
         const snapshot =
-        await window.firebaseDB.getDocs(
-            window.firebaseDB.collection(
-                window.firebaseDB.db,
+        await getDocs(
+            collection(
+                db,
                 "latonados"
             )
         );
@@ -1182,14 +1179,11 @@ async function carregarLatonadosFirebase(){
 
         snapshot.forEach(doc => {
 
-            latonados.push(
-                doc.data()
-            );
+            latonados.push(doc.data());
 
         });
 
         listarLatonados();
-
         dashboardLatonados();
 
         console.log(
@@ -1198,9 +1192,7 @@ async function carregarLatonadosFirebase(){
 
     }catch(erro){
 
-        console.error(
-        erro
-        );
+        console.error(erro);
 
     }
 
