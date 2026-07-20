@@ -56,7 +56,7 @@ function mostrarTela(id) {
 // LOGIN
 // =========================
 
-function login() {
+async function login() {
 
     let usuario = document.getElementById("loginUsuario").value;
     let senha = document.getElementById("loginSenha").value;
@@ -92,7 +92,6 @@ function login() {
 
     atualizarDashboard();
     carregarTabela();
-    await carregarUsuariosFirebase();
 
     alert("Login realizado com sucesso.");
 }
