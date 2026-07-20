@@ -660,15 +660,16 @@ function exportarExcel() {
         ),
         produto
     );
-
-}
-
-await carregarCaixasFirebase();
+    await carregarCaixasFirebase();
 
         alert(
             dadosExcel.length +
             " produtos importados com sucesso."
         );
+
+}
+
+
 
     };
 
