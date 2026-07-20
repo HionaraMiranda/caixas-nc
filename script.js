@@ -605,7 +605,7 @@ function exportarExcel() {
 // =========================
 // IMPORTAR EXCEL
 // =========================
- async function importarExcel(event) {
+async function importarExcel(event) {
 
     const arquivo = event.target.files[0];
 
@@ -613,7 +613,7 @@ function exportarExcel() {
 
     const reader = new FileReader();
 
-    reader.onload = function (e) {
+    reader.onload = async function (e) {
 
         const data = new Uint8Array(e.target.result);
 
@@ -621,59 +621,63 @@ function exportarExcel() {
             type: "array"
         });
 
-        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        const sheet =
+        workbook.Sheets[
+            workbook.SheetNames[0]
+        ];
 
-        const dadosExcel = XLSX.utils.sheet_to_json(sheet);
+        const dadosExcel =
+        XLSX.utils.sheet_to_json(sheet);
 
-      for (const linha of dadosExcel) {
+        for (const linha of dadosExcel) {
 
-    let produto = {
+            let produto = {
 
-        caixa: linha["Número da caixa"] || "",
+                caixa: linha["Número da caixa"] || "",
 
-        descricao: linha["Descrição"] || "",
+                descricao: linha["Descrição"] || "",
 
-        bobina: linha["TIPO DE BOBINA"] || "",
+                bobina: linha["TIPO DE BOBINA"] || "",
 
-        categoria: linha["CAIXA DE"] || "",
+                categoria: linha["CAIXA DE"] || "",
 
-        peso: linha["Peso (kg)"] || 0,
+                peso: linha["Peso (kg)"] || 0,
 
-        usuario: linha["Usuário"] || "IMPORTACAO",
+                usuario: linha["Usuário"] || "IMPORTACAO",
 
-        localizacao: linha["Localização"] || "",
+                localizacao: linha["Localização"] || "",
 
-        observacao: "",
+                observacao: "",
 
-        dataCadastro: new Date().toLocaleString(),
+                dataCadastro: new Date().toLocaleString(),
 
-        alteradoPor: "",
+                alteradoPor: "",
 
-        dataAlteracao: ""
+                dataAlteracao: ""
 
-    };
+            };
 
-    await window.addDoc(
-        window.collection(
-            window.db,
-            "caixas"
-        ),
-        produto
-    );
-    await carregarCaixasFirebase();
+            await window.addDoc(
+                window.collection(
+                    window.db,
+                    "caixas"
+                ),
+                produto
+            );
+
+        }
+
+        await carregarCaixasFirebase();
 
         alert(
             dadosExcel.length +
             " produtos importados com sucesso."
         );
 
-}
-
-
-
     };
 
     reader.readAsArrayBuffer(arquivo);
+
 }
 console.log(produtos);
 
