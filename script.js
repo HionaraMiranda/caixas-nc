@@ -7,12 +7,7 @@ let latonados =
 JSON.parse(
 localStorage.getItem("latonados")
 ) || [];
-let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [
-    {
-        usuario: "admin",
-        senha: "123456"
-    }
-];
+let usuarios = [];
 
 // =========================
 // NAVEGAÇÃO
@@ -1325,6 +1320,44 @@ async function carregarUsuariosFirebase(){
     }catch(erro){
 
         console.error(erro);
+
+    }
+
+}
+async function carregarUsuariosFirebase(){
+
+    try{
+
+        const snapshot =
+        await window.getDocs(
+            window.collection(
+                window.db,
+                "usuarios"
+            )
+        );
+
+        usuarios = [];
+
+        snapshot.forEach(doc => {
+
+            usuarios.push({
+                id: doc.id,
+                ...doc.data()
+            });
+
+        });
+
+        listarUsuarios();
+
+        console.log(
+        "USUARIOS CARREGADOS"
+        );
+
+    }catch(erro){
+
+        console.error(
+        erro
+        );
 
     }
 
