@@ -607,6 +607,17 @@ function exportarExcel() {
 // =========================
 async function importarExcel(event) {
 
+    if(
+    localStorage.getItem("perfil") !== "admin"
+){
+
+    alert(
+        "Somente o administrador pode importar planilhas."
+    );
+
+    return;
+
+}
     const arquivo = event.target.files[0];
 
     if (!arquivo) return;
