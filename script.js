@@ -209,22 +209,33 @@ await carregarUsuariosFirebase();
 async function salvarProduto() {
 
     let caixa = document.getElementById("caixa").value;
+if (!/^\d+$/.test(caixa)) {
 
+    alert(
+        "O número da caixa deve conter apenas números."
+    );
+
+    return;
+
+}
     if (caixa === "") {
         alert("Informe o número da caixa.");
         return;
     }
+let existe = produtos.find(
+    p => String(p.caixa).trim() === String(caixa).trim()
+);
 
-    let existe = produtos.find(
-        p => p.caixa === caixa
+if (existe) {
+
+    alert(
+        "Esta caixa já foi cadastrada."
     );
 
-    if (existe) {
+    return;
 
-        alert("Esta caixa já foi cadastrada.");
-
-        return;
-    }
+}
+   
 
     let produto = {
 
