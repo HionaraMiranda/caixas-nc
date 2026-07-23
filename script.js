@@ -320,7 +320,7 @@ await registrarHistorico(
 );
 
 alert("Produto cadastrado com sucesso.");
-}
+
 
 // =========================
 // LIMPAR FORM
