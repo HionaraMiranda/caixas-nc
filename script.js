@@ -242,14 +242,8 @@ async function salvarProduto() {
         alert(
             "Esta caixa já foi cadastrada."
         );
-
-        return;
-
+return;
     }
-
-    return;
-
-}
 
     let produto = {
 
@@ -320,6 +314,7 @@ await registrarHistorico(
 );
 
 alert("Produto cadastrado com sucesso.");
+}
 
 
 // =========================
