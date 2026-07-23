@@ -208,34 +208,48 @@ await carregarUsuariosFirebase();
 
 async function salvarProduto() {
 
-    let caixa = document.getElementById("caixa").value;
-if (!/^\d+$/.test(caixa)) {
+    let caixa =
+    document.getElementById("caixa")
+    .value
+    .trim();
 
-    alert(
-        "O número da caixa deve conter apenas números."
-    );
-
-    return;
-
-}
     if (caixa === "") {
-        alert("Informe o número da caixa.");
+
+        alert(
+            "Informe o número da caixa."
+        );
+
         return;
+
     }
-let existe = produtos.find(
-    p => String(p.caixa).trim() === String(caixa).trim()
-);
 
-if (existe) {
+    if (!/^[0-9]+$/.test(caixa)) {
 
-    alert(
-        "Esta caixa já foi cadastrada."
+        alert(
+            "O número da caixa deve conter apenas números."
+        );
+
+        return;
+
+    }
+
+    let existe = produtos.find(
+        p => String(p.caixa).trim() === caixa
     );
+
+    if (existe) {
+
+        alert(
+            "Esta caixa já foi cadastrada."
+        );
+
+        return;
+
+    }
 
     return;
 
 }
-   
 
     let produto = {
 
